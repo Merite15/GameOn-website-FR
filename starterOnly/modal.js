@@ -17,7 +17,7 @@ const form = document.getElementById("reserve");
 const closeBtnConfirmation = document.getElementById("closeBtnConfirmation");
 const confirmationMsg = document.getElementById("confirmationMsg");
 
-// Éléments DOM pour chaque entrée et erreur
+// Éléments DOM pour chaque entrée du formulaire avec leur erreur
 const first_name = document.getElementById("first_name");
 const firstNameError = document.getElementById("firstNameError");
 
@@ -34,7 +34,7 @@ const quantity = document.getElementById("quantity");
 const quantityError = document.getElementById("quantityError");
 
 const localisation = document.getElementsByName("localisation");
-const locationError = document.getElementById("locationError");
+const localisationError = document.getElementById("localisationError");
 
 const conditions = document.getElementById("checkbox1");
 const conditionsError = document.getElementById("conditionsError");
@@ -61,9 +61,11 @@ closeBtn.addEventListener("click", closeModal);
 // close modal form
 function closeModal() {
   modalbg.style.display = "none";
+
   if (mediaQueryMobile.matches) {
     heroSection.style.display = "block";
   }
+
   // Message de fermeture et de confirmation du bouton non affiché
   closeBtnConfirmation.style.display = "none";
   confirmationMsg.style.display = "none";
@@ -74,15 +76,14 @@ function closeModal() {
   first_name.value = "";
 }
 
-// button close and confirmation message not displayed
+// Message de fermeture et de confirmation du bouton non affiché
 closeBtnConfirmation.style.display = "none";
 confirmationMsg.style.display = "none";
 
-// Entrées Vérifier + Message d'erreur et son style
+// Verification des données entrées avec leur message d'erreur et le style
 function checkInputs() {
   let formConfirmation = true;
-// Si le prénom est vide et ne respecte pas le nom regex, ou sa longueur est inférieure à 2 caractères
-  // alors le message d'erreur s'affiche
+  // Si la longueur du prénom est inférieure à 2 caractères alors le message d'erreur s'affiche 
   if (first_name.value.length < 2) {
     firstNameError.style.display = "block";
     firstNameError.textContent = "Veuillez entrer 2 caractères minimum";
@@ -96,6 +97,7 @@ function checkInputs() {
     first_name.style = "default";
   }
 
+  // Si la longueur du nom est inférieure à 2 caractères alors le message d'erreur s'affiche
   if (last_name.value.length < 2) {
     lastNameError.style.display = "block";
     lastNameError.textContent = "Veuillez entrer 2 caractères minimum";
@@ -109,12 +111,12 @@ function checkInputs() {
     last_name.style = "default";
   }
 
-  // if email doesn't correspond to regex => error
-  let verifyEmail =/^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  // Si le courrier électronique ne correspond pas à Regex alors un message d'erreur s'affiche
+  let verifyEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   if (verifyEmail.exec(email.value) === null) {
     emailError.style.display = "block";
-    emailError.textContent = "Veuillez renseigner votre adresse mail";
+    emailError.textContent = "Veuillez renseigner votre adresse mail valide et conforme";
     emailError.style.color = "red";
     emailError.style.fontSize = "12px";
     email.style.borderColor = "red";
@@ -125,6 +127,7 @@ function checkInputs() {
     email.style = "default";
   }
 
+  // si la date de naissance n'est pas présente alors un message d'erreur apparaît
   if (!birthdate.value) {
     birthdateError.style.display = "block";
     birthdateError.textContent = "Veuillez entrer votre date de naissance";
@@ -138,10 +141,10 @@ function checkInputs() {
     birthdate.style = "default";
   }
 
-  // Si la quantité est vide ou sa valeur n'est pas un nombre => Erreur
+  // Si la quantité est vide ou sa valeur n'est pas un nombre alors un message d'erreur s'affiche
   if (quantity.value === "" || isNaN(quantity.value)) {
     quantityError.style.display = "block";
-    quantityError.textContent = "Veuillez renseigner ce champ";
+    quantityError.textContent = "Veuillez renseigner ce champ. Prière de mettre un nombre";
     quantityError.style.color = "red";
     quantityError.style.fontSize = "12px";
     quantity.style.borderColor = "red";
@@ -152,7 +155,7 @@ function checkInputs() {
     quantity.style = "default";
   }
 
-  // Si l'une des options n'est pas vérifiée => Erreur
+  // Si l'une des options de localisation n'est pas présente alors un message d'erreur s'affiche
   if (
     !(
       localisation[0].checked ||
@@ -163,17 +166,17 @@ function checkInputs() {
       localisation[5].checked
     )
   ) {
-    locationError.style.display = "block";
-    locationError.textContent = "Veuillez choisir une option";
-    locationError.style.color = "red";
-    locationError.style.fontSize = "10px";
+    localisationError.style.display = "block";
+    localisationError.textContent = "Veuillez choisir une option";
+    localisationError.style.color = "red";
+    localisationError.style.fontSize = "10px";
     formConfirmation = false;
   } else {
-    locationError.style.display = "none";
+    localisationError.style.display = "none";
     localisation.style = "default";
   }
 
-    // Si les conditions ne sont pas acceptées  => Erreur
+  // Si les conditions d'utilisation ne sont pas acceptées  alors un message d'erreur apparaît
   if (!conditions.checked) {
     conditionsError.style.display = "block";
     conditionsError.textContent =
@@ -192,10 +195,11 @@ function checkInputs() {
 
 // Fonction appelée lors de la soumission du formulaire
 function validate(event) {
-// Le comportement par défaut de l'événement de soumission est évité
+
+  // Le comportement par défaut de l'événement de soumission est évité
   event.preventDefault();
 
-// Toutes les entrées doivent être vraies afin que le formulaire puisse être soumis correctement
+  // Toutes les entrées doivent être vraies afin que le formulaire puisse être soumis correctement
   // Si oui, le message de confirmation et le bouton de fermeture s'affichent
   if (checkInputs()) {
     form.style.display = "none";
@@ -208,6 +212,7 @@ function validate(event) {
 
     submitBtn.style.display = "none";
     confirmationMsg.style.display = "flex";
+    confirmationMsg.style.flexDirection = "column";
     closeBtnConfirmation.addEventListener("click", closeModal);
     return true;
   }
