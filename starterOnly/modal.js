@@ -1,4 +1,4 @@
-function editNav() {
+function openNavBar() {
   var x = document.getElementById("myTopnav");
   if (x.className === "topnav") {
     x.className += " responsive";
@@ -56,7 +56,7 @@ function launchModal() {
   }
 }
 
-// close modal event
+// Événement de fermeture de la modale
 closeBtn.addEventListener("click", closeModal);
 // close modal form
 function closeModal() {
