@@ -8,7 +8,7 @@ function openNavBar() {
 }
 
 // DOM Elements
-const modalbg = document.querySelector(".bground");
+const modalContent = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const closeBtn = document.querySelector(".close");
@@ -49,7 +49,8 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
 // Lancez le formulaire modal
 function launchModal() {
-  modalbg.style.display = "block";
+  modalContent.style.display = "block";
+  
   // Si l'écran mobile, Hero-section n'apparaît pas
   if (mediaQueryMobile.matches) {
     heroSection.style.display = "none";
@@ -58,9 +59,10 @@ function launchModal() {
 
 // Événement de fermeture de la modale
 closeBtn.addEventListener("click", closeModal);
-// close modal form
+
+// Fermer le formulaire
 function closeModal() {
-  modalbg.style.display = "none";
+  modalContent.style.display = "none";
 
   if (mediaQueryMobile.matches) {
     heroSection.style.display = "block";
